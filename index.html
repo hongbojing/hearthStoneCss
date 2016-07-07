@@ -19,7 +19,7 @@
         }
         body:after {
           background-color: #000;
-          background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/hearthstone-battlefield.jpg);
+          background-image: url(bg.png);
           background-position: center center;
           background-repeat: no-repeat;
           background-size: cover;
@@ -35,7 +35,8 @@
           z-index: -1;
         }
 
-        .card {
+        .card,
+        .card2 {
           left: 0;
           top: 0;
           perspective: 400px;
@@ -54,7 +55,12 @@
           cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/hearthstone-grab.png) 10 2, auto;
         }
 
-        .card-image {
+        .card2:active {
+          cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/hearthstone-grab.png) 10 2, auto;
+        }
+
+        .card-image,
+        .card-image2  {
           display: block;
           pointer-events: none;
           transform-style: preserve-3d;
@@ -72,42 +78,46 @@
 </head>
 <body>
     <div class="card">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/hearthstone-ragnaros.png" class="card-image" draggable="false">
+        <img src="dragTarget.png" class="card-image" draggable="false">
+    </div>
+
+    <div class="card2">
+        <img src="dragTarget.png" class="card-image2" draggable="false">
     </div>
 
     <script>
-        var card,
-            image,
-            cardw,
-            cardh,
-            cardx,
-            cardy,
-            ocardx,
-            ocardy,
-            pinx,
-            piny,
-            pinxperc,
-            pinyperc,
-            targetx,
-            targety,
-            rx,
-            ry,
-            targetrx,
-            targetry,
-            scale,
-            targetscale,
-            ww,
-            wh,
-            md,
-            mx,
-            my,
-            whoosh,
-            whooshvol,
-            whooshvoltarget,
-            majesty,
-            majestyvol,
-            majestyvoltarget,
-            audioloaded;
+        var card, card2,
+            image, image2,
+            cardw, cardw2,
+            cardh, cardh2,
+            cardx, cardx2,
+            cardy, cardy2,
+            ocardx, ocardx2,
+            ocardy, ocardy2,
+            pinx, pinx2,
+            piny, piny2,
+            pinxperc, pinxperc2,
+            pinyperc, pinyperc2,
+            targetx, targetx2,
+            targety, targety2,
+            rx, rx2,
+            ry, ry2,
+            targetrx, targetrx2,
+            targetry, targetry2,
+            scale, scale2,
+            targetscale, argetscale2,
+            ww, ww2,
+            wh, wh2,
+            md, md2,
+            mx, mx2,
+            my, my2,
+            whoosh, whoosh2,
+            whooshvol, whooshvol2,
+            whooshvoltarget, whooshvoltarget2,
+            majesty, majesty2,
+            majestyvol, majestyvol2,
+            majestyvoltarget, majestyvoltarget2,
+            audioloaded, audioloaded2;
 
         function audioload() {
             audioloaded++;
@@ -120,14 +130,25 @@
             }
         }
 
+        function audioload2() {
+            audioloaded2++;
+            if( audioloaded2 == 2 ) {
+                document.body.classList.add( 'loaded' );
+                majesty2.play2();
+                whoosh2.play2();
+                bindevents2();
+                loop2();
+            }
+        }
+
         function init() {
-            onresize();
-            card = document.querySelector( '.card' );
-            image = document.querySelector( '.card-image' );
-            cardw = image.width;
-            cardh = image.height;
-            cardx = ww / 2 - cardw / 2;
-            cardy = wh / 2 - cardh / 2;
+            onresize(); // use onresize() to get the current width and height of the window, : ww, wh
+            card = document.querySelector( '.card' ); // * get the div html element outside of the image
+            image = document.querySelector( '.card-image' ); // * get the image html element
+            cardw = image.width; // * get the width of the card image
+            cardh = image.height; // * get the height of the card image
+            cardx = ww / 2 - cardw / 2; // get the x-coordinate of the card
+            cardy = wh / 2 - cardh / 2; // get the y-coordinate of the card
             ocardx = cardx;
             ocardy = cardy;
             pinx = 0;
@@ -194,6 +215,8 @@
             }
         }
 
+        // use the css inner * property to get the window's height and width
+        // then assign them to ww and wh
         function onresize() {
             ww = window.innerWidth;
             wh = window.innerHeight;
