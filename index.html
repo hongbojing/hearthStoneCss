@@ -35,7 +35,8 @@
           z-index: -1;
         }
 
-        .card {
+        .card,
+        .card2 {
           left: 0;
           top: 0;
           perspective: 400px;
@@ -53,8 +54,12 @@
         .card:active {
           cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/hearthstone-grab.png) 10 2, auto;
         }
+        .card2:active {
+          cursor: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/hearthstone-grab.png) 10 2, auto;
+        }
 
-        .card-image {
+        .card-image,
+        .card-image2 {
           display: block;
           pointer-events: none;
           transform-style: preserve-3d;
@@ -73,6 +78,10 @@
 <body>
     <div class="card">
         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/836/hearthstone-ragnaros.png" class="card-image" draggable="false">
+    </div>
+
+    <div class="card2">
+        <img src="test.png" class="card-image2" draggable="false">
     </div>
 
     <script>
@@ -120,10 +129,11 @@
             }
         }
 
-        function init() {
+        function init(cardName, imageName) {
+            console.log(cardName, imageName);
             onresize();
-            card = document.querySelector( '.card' );
-            image = document.querySelector( '.card-image' );
+            card = document.querySelector(cardName);
+            image = document.querySelector(imageName);
             cardw = image.width;
             cardh = image.height;
             cardx = ww / 2 - cardw / 2;
@@ -250,7 +260,13 @@
             ocardy = cardy;
         }
 
-        window.onload = init;
+        window.onload = function() {
+            var cardName = '.card'; var imageName = '.card-image';
+            var cardName2 = '.card2'; var imageName2 = '.card-image2';
+
+            init(cardName, imageName);
+            init(cardName2, imageName2);
+        };
 
     </script>
 </body>
